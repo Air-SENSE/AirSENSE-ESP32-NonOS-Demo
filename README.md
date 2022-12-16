@@ -1,4 +1,3 @@
-# AirSENSE-ESP32-NON-OS
+# AirSENSE-ESP32-RTOS
 
-this is fake!!
 we are using freeRTOS because NonOS is very stupid
