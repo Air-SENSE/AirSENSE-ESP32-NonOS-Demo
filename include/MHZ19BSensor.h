@@ -60,7 +60,7 @@ ERROR_CODE mhz_init()
     // Optional: Detect MH-Z19B sensor (check wiring / power)
     int mhz_decect_count = 0;
     while ( !mhz19b.detect()) {
-        ESP_LOGD("Detecting MH-Z19B sensor...");
+        log_e("Detecting MH-Z19B sensor...");
         delay(2000);
         mhz_decect_count++;
         if(mhz_decect_count>10) return ERROR_MHZ_INIT_FAILED;
@@ -68,32 +68,32 @@ ERROR_CODE mhz_init()
 
     // Sensor requires 3 minutes warming-up after power-on
     while (mhz19b.isWarmingUp()) {
-        ESP_LOGD("Warming up...");
+        log_e("Warming up...");
         delay(2000);
     };
 
     // Optional: Print firmware version
-    ESP_LOGI("  Firmware: ");
-    mhz19b.getVersion(firmwareVersion, sizeof(firmwareVersion));
-    ESP_LOGI("%s",firmwareVersion);
+    // log_e("  Firmware: ");
+    // mhz19b.getVersion(firmwareVersion, sizeof(firmwareVersion));
+    // log_e("%s",firmwareVersion);
 
     // Optional: Set CO2 range 2000ppm or 5000ppm (default) once
-    // Serial.print(F("Set range..."));
+    // log_e("Set range...");
     // mhz19b.setRange2000ppm();
     // mhz19b.setRange5000ppm();
 
     // Optional: Print operating range
-    ESP_LOGI("  Range: ");
-    ESP_LOGI("%d",mhz19b.getRange());
-    ESP_LOGI("ppm");
+    // log_e("  Range: ");
+    // log_e("%d",mhz19b.getRange());
+    // log_e("ppm");
 
     // Optional: Set automatic calibration on (true) or off (false) once
     // Serial.print(F("Set auto calibrate..."));
     // mhz19b.setAutoCalibration(true);
 
     // Optional: Print Automatic Baseline Calibration status
-    ESP_LOGI("  Auto calibrate: ");
-    // ESP_LOGI(mhz19b.getAutoCalibration() ? F("On") : F("Off"));
+    // log_e("  Auto calibrate: ");
+    // log_e("%s", mhz19b.getAutoCalibration() ? ("On") : ("Off"));
 
     return ERROR_NONE;
 }
@@ -110,12 +110,12 @@ ERROR_CODE mhz_getdata(uint32_t &_co_2)
         if (result < 0) {
             // An error occurred
             _co_2 = -1;
-            ESP_LOGI("MHZ19B Sensor get new data failed!");
+            log_e("MHZ19B Sensor get new data failed!");
             return ERROR_MHZ_GET_DATA_FAILED;
         } else {
             // Print CO2 concentration in ppm
             _co_2 = result;
-            ESP_LOGI("MHZ19B Sensor get new data successfully! %d",_co_2);
+            log_e("MHZ19B Sensor get new data successfully! %d",_co_2);
              return ERROR_NONE;
         }
     }

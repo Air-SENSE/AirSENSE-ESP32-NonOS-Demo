@@ -12,10 +12,10 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define NAME_DEVICE "AirSENSE-NonOS-1"
+#define NAME_DEVICE "SPARC-1"
 
 #define SERIAL_DEBUG_BAUDRATE   (9600)
-
+#define DEVICE_DATA_SAVE_INTERVAL 5000
 #define ERROR_CODE int
 #define ERROR_NONE (0x00)
 
@@ -44,8 +44,10 @@ struct connectionStatus
 //========================== DEFINE FOR WIFI ========================
 
 #define USING_WIFI_CONFIG
-const char ssid[] = "BK Star";
-const char pass[]  = "bkstar2021";
+#define WIFI_CONNECT_INTERVAL 30000
+#define WIFI_MAX_CONNECT_TRIAL 50
+const char ssid[] = "SPARC";
+const char pass[]  = "sparc2022";
 
 //========================== DEFINE FOR LOGGING ========================
 

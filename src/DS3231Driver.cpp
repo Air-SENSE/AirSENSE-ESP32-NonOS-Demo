@@ -4,7 +4,7 @@ ERROR_CODE DS3231_init(RTC_DS3231& _realTime, NTPClient&  _timeClient, TwoWire &
 {
 	if (_realTime.begin(&_wire))			// khoi dong module RTC
 	{
-		ESP_LOGD("RTC module initialized successfully!");        		
+		log_e("RTC module initialized successfully!");        		
 		connectionStatus_st.ds3231Module = status_et::CONNECTED;
 		if (_connectionStatus.wifiStatus == status_et::CONNECTED)		// kiem tra co ket noi wifi
 		{
@@ -13,19 +13,19 @@ ERROR_CODE DS3231_init(RTC_DS3231& _realTime, NTPClient&  _timeClient, TwoWire &
 				_timeClient.update();						// cap nhat thoi gian cho RTC	
 				uint32_t epochTime_u32 = _timeClient.getEpochTime();
 				_realTime.adjust(DateTime(epochTime_u32));			// Set the date and flip the Oscillator Stop Flag
-				ESP_LOGI("Updatetime DS3231....");
-				ESP_LOGI("Updatetime success. Current time: %u.", _realTime.now().unixtime());
+				log_i("Updatetime DS3231....");
+				log_i("Updatetime success. Current time: %u.", _realTime.now().unixtime());
 			}
 			return ERROR_NONE;
 		} else 
 		{
-			ESP_LOGE("Wifi is disconnect.");
-			ESP_LOGE("Updatetime failed.");
+			log_e("Wifi is disconnect.");
+			log_e("Updatetime failed.");
 			return ERROR_RTC_UPDATE_TIME_FAILED;
 		}
 
 	} else {
-		ESP_LOGE("RTC module initialized failed!");		
+		log_e("RTC module initialized failed!");		
 		connectionStatus_st.ds3231Module = status_et::DISCONNECTED;
 		return ERROR_RTC_INIT_FAILED;
 	}
@@ -37,10 +37,10 @@ ERROR_CODE DS3231_getStringDateTime(RTC_DS3231 _realTime, DateTime::timestampOpt
 	{
 		strcpy(_dateTime_string, (_realTime.now().timestamp(_opt).c_str()));		// in thoi gian hien tai ra Serial
 
-		ESP_LOGI("Get DateTime successfully!");
+		log_i("Get DateTime successfully!");
 		return ERROR_NONE;
 	} else {
-		ESP_LOGE("Get DateTime failed.");
+		log_e("Get DateTime failed.");
 		return ERROR_RTC_GET_STRING_DATETIME_FAILED;
 	}
 }

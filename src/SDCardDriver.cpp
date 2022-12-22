@@ -13,13 +13,13 @@ ERROR_CODE SDcard_init(uint8_t _pinSCK,
 	if (SD.begin(_pinCS))
 	{
 		_connectionStatus->sdCardStatus = status_et::CONNECTED;
-		ESP_LOGD("SD init success.");
+		log_e("SD init success.");
 		return ERROR_NONE;
 	}
 	else
 	{
 		_connectionStatus->sdCardStatus = status_et::DISCONNECTED;
-		ESP_LOGE("SD init false.");
+		log_e("SD init false.");
 		return ERROR_SD_CARD_INIT_FAILED;		
 	}
 }
@@ -76,16 +76,16 @@ ERROR_CODE SDcard_readCalibDataFromFile(struct connectionStatus *_connectStatus,
 
 			readFile.close();
 			_connectStatus->sdCardStatus = status_et::CONNECTED;
-			ESP_LOGI("SD card read calibrate data successfully!");
+			log_i("SD card read calibrate data successfully!");
 			return ERROR_NONE;
 		} else {
-			ESP_LOGI("File not found!");
-			ESP_LOGI("SD card read calibrate data failed!");
+			log_e("File not found!");
+			log_e("SD card read calibrate data failed!");
 			return ERROR_SD_CARD_FILE_NOT_FOUND;
 		}
 	} else {
-		ESP_LOGI("SD card disconnected!");
-		ESP_LOGI("SD card read calibrate data failed!");
+		log_e("SD card disconnected!");
+		log_e("SD card read calibrate data failed!");
 		return ERROR_SD_CARD_READ_FILE_FAILED;
 	}
 }
@@ -107,19 +107,19 @@ ERROR_CODE SDcard_saveStringDataToFile( struct connectionStatus *_connectStatus,
 			writeFile.println(fileContent_string);		// ghi chuoi ki tu chua du lieu vao file
 			writeFile.close();							// dong file
 			_connectStatus->sdCardStatus = status_et::CONNECTED;
-			ESP_LOGI("%s", fileContent_string);
-			ESP_LOGI("SD card write sensor data to file successfully!");
+			log_i("%s", fileContent_string);
+			log_i("SD card write sensor data to file successfully!");
 			return ERROR_NONE;
 		}
 		else
 		{
-			ESP_LOGE("Can't open file to write!");
-			ESP_LOGE("SD card write sensor data to file failed!");
+			log_e("Can't open file to write!");
+			log_e("SD card write sensor data to file failed!");
 			return ERROR_SD_CARD_FILE_NOT_FOUND;
 		}
 	} else {
-		ESP_LOGE("SD card disconnected!");
-		ESP_LOGE("SD card write data failed!");
+		log_e("SD card disconnected!");
+		log_e("SD card write data failed!");
 		return ERROR_SD_CARD_READ_FILE_FAILED;
 	}
 }

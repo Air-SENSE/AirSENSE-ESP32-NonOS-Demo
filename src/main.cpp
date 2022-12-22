@@ -7,21 +7,18 @@ void device_getData()
 
   if(pms_getdata(sensorDataTemp_st.pm1_u32, sensorDataTemp_st.pm25_u32, sensorDataTemp_st.pm10_u32)== ERROR_NONE)
   {
-    connectionStatus_st.pmsSensor = status_et::READING_DATA;
     sensorData_st.pm1_u32   = sensorDataTemp_st.pm1_u32;
     sensorData_st.pm25_u32  = sensorDataTemp_st.pm25_u32;
     sensorData_st.pm10_u32  = sensorDataTemp_st.pm10_u32;
   }
   if(bme_readData(sensorDataTemp_st.temperature, sensorDataTemp_st.humidity, sensorDataTemp_st.pressure_u32) == ERROR_NONE)
     {
-    connectionStatus_st.bmeSensor = status_et::READING_DATA;
     sensorData_st.temperature   = sensorDataTemp_st.temperature;
     sensorData_st.humidity      = sensorDataTemp_st.humidity;
     sensorData_st.pressure_u32  = sensorDataTemp_st.pressure_u32;
   }
   if(mhz_getdata(sensorDataTemp_st.co_2_u32) == ERROR_NONE)
   {
-    connectionStatus_st.mhzSensor = status_et::READING_DATA;
     sensorData_st.co_2_u32  = sensorDataTemp_st.co_2_u32;
   }
 }
@@ -36,13 +33,12 @@ void device_dataManagement()
 	SDcard_saveStringDataToFile(&connectionStatus_st, sensorDataString);
   createMessageMQTTString(messageData, (const char *)espID, timeClient, sensorDataTemp_st);
   MQTT_postData(messageData.c_str(), &connectionStatus_st, mqttClient);
-  delay(2000);
 }
 
 void setup() {
     Serial.begin(SERIAL_DEBUG_BAUDRATE);
     Serial2.begin(SERIAL_DEBUG_BAUDRATE);
-    ESP_LOGD("Booting...");
+    log_e("Booting...");
     WIFI_init();
     Wire.begin(PIN_SDA_GPIO, PIN_SCL_GPIO, I2C_CLOCK_SPEED);
     bme_initialize(Wire);
@@ -56,15 +52,25 @@ void setup() {
 #ifdef USING_SDCARD
 	SDcard_init(PIN_NUM_CLK, PIN_NUM_MISO, PIN_NUM_MOSI, PIN_CS_SD_CARD, &connectionStatus_st);
 #endif
-    ESP_LOGD("Init Done");
+    log_e("Init Done");
 }
-unsigned long last_send = 0;
+
+unsigned long device_previousDataControl = 0;
+unsigned long device_previousWifiReconnect = 0;
+
 void loop() {
-  // put your main code here, to run repeatedly:
+  // get data from all sensor
   device_getData();
-  if(millis() - last_send > 5000) 
+  if(millis() - device_previousDataControl > DEVICE_DATA_SAVE_INTERVAL) 
   {
     device_dataManagement();
-    last_send = millis();
+    device_previousDataControl = millis();
+  }
+  // if WiFi is down, try reconnecting every CHECK_WIFI_TIME seconds
+  if ((WiFi.status() != WL_CONNECTED) && (millis() - device_previousWifiReconnect >= WIFI_CONNECT_INTERVAL)) {
+    log_e("Reconnecting to WiFi...");
+    WiFi.disconnect();
+    WiFi.reconnect();
+    device_previousWifiReconnect = millis();
   }
 }
