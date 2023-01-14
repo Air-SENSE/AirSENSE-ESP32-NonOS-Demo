@@ -77,7 +77,7 @@ ERROR_CODE pms_getdata(uint32_t &_pm_1_0, uint32_t &_pm_2_5, uint32_t &_pm_10_0)
         _pm_1_0 = -1;
         _pm_2_5 = -1;
         _pm_10_0 = -1;
-        // ESP_LOGI("PMS7003 Sensor get new data failed!");
+        // log_e("PMS7003 Sensor get new data failed!");
         return ERROR_PMS_GET_DATA_FAILED;
     }
 }

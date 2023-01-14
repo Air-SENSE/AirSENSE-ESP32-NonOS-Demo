@@ -20,7 +20,7 @@
 #include "WiFiManager.h"
 #include "BMESensor.h"
 #include "PMS7003Sensor.h"
-#include "MHZ19BSensor.h"
+#include "MHZ14ASensor.h"
 #include "DS3231Driver.h"
 #include "MQTTConnection.h"
 

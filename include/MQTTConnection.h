@@ -1,7 +1,7 @@
 /**
  * @file MQTTConnection.h
- * @author your name (you@domain.com)
- * @brief 
+ * @author lctuyenvn@gmail.com
+ * @brief hocj2me
  * @version 0.1
  * @date 2022-11-11
  * 

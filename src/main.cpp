@@ -37,13 +37,12 @@ void device_dataManagement()
 
 void setup() {
     Serial.begin(SERIAL_DEBUG_BAUDRATE);
-    Serial2.begin(SERIAL_DEBUG_BAUDRATE);
     log_e("Booting...");
     WIFI_init();
     Wire.begin(PIN_SDA_GPIO, PIN_SCL_GPIO, I2C_CLOCK_SPEED);
+    mhz_init();
     bme_initialize(Wire);
     pms_init();
-    mhz_init();
 	  DS3231_init(realTime, timeClient, Wire, connectionStatus_st);
 #ifdef USING_MQTT
 	MQTT_initClient(topic, espID, mqttClient, &connectionStatus_st);
@@ -53,6 +52,11 @@ void setup() {
 	SDcard_init(PIN_NUM_CLK, PIN_NUM_MISO, PIN_NUM_MOSI, PIN_CS_SD_CARD, &connectionStatus_st);
 #endif
     log_e("Init Done");
+  unsigned long time_4_first_record = millis();
+  while (millis() - time_4_first_record < 1000)
+  {
+    device_getData();
+  }
 }
 
 unsigned long device_previousDataControl = 0;

@@ -1,9 +1,9 @@
 /**
- * @file PMS7003Sensor.h
- * @author your name (you@domain.com)
- * @brief 
+ * @file MHZ19BSensor.h
+ * @author lctuyenvn@gmail.com
+ * @brief hocj2me
  * @version 0.1
- * @date 2022-11-20
+ * @date 022-11-20
  * 
  * @copyright Copyright (c) 2022
  * 
@@ -20,7 +20,6 @@
 #define MHZ19B_TX_PIN        33
 #define MHZ19B_RX_PIN        25
 
-// SoftwareSerial mhzSerial(MHZ19B_TX_PIN, MHZ19B_RX_PIN);
 #define mhzSerial   Serial
 
 ErriezMHZ19B mhz19b(&mhzSerial);

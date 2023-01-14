@@ -46,8 +46,8 @@ struct connectionStatus
 #define USING_WIFI_CONFIG
 #define WIFI_CONNECT_INTERVAL 30000
 #define WIFI_MAX_CONNECT_TRIAL 50
-const char ssid[] = "SPARC";
-const char pass[]  = "sparc2022";
+const char ssid[] = "BK Star";
+const char pass[]  = "bkstar2021";
 
 //========================== DEFINE FOR LOGGING ========================
 
