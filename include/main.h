@@ -14,7 +14,7 @@
 // local headers
 #include "configs.h"
 // #include "globals.h"
-
+#include "insightsDriver.h"
 // #include "DeviceManager.h"
 #include "DataStructure.h"
 #include "WiFiManager.h"

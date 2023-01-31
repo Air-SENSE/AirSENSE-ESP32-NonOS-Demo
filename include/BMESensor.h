@@ -49,7 +49,7 @@ ERROR_CODE bme_readData(float &_temperature, float &_humidity, float &_pressure)
 
 ERROR_CODE bme_initialize(TwoWire &_wire)
 {
-    Wire.begin(PIN_SDA_GPIO, PIN_SCL_GPIO, I2C_CLOCK_SPEED);
+    // Wire.begin(PIN_SDA_GPIO, PIN_SCL_GPIO, I2C_CLOCK_SPEED);
 
     if (bmeSensor.begin())
     {

@@ -12,12 +12,13 @@
 #ifndef CONFIGS_H
 #define CONFIGS_H
 
-#define NAME_DEVICE "SPARC-1"
+#define NAME_DEVICE "SPARC-2"
 
-#define SERIAL_DEBUG_BAUDRATE   (9600)
-#define DEVICE_DATA_SAVE_INTERVAL 5000
-#define ERROR_CODE int
-#define ERROR_NONE (0x00)
+#define SERIAL_DEBUG_BAUDRATE           (9600)
+#define DEVICE_DATA_SAVE_INTERVAL_TIME  (10000UL)
+#define DEVICE_PRE_GET_DATE_TIME        (5000UL)
+#define ERROR_CODE                      int
+#define ERROR_NONE                      (0x00)
 
 enum status_et
 {

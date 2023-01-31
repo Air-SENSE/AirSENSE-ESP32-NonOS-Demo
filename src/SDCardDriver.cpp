@@ -7,6 +7,8 @@ ERROR_CODE SDcard_init(uint8_t _pinSCK,
 					   uint8_t _pinCS,
 					   struct connectionStatus *_connectionStatus)
 {
+#ifdef USING_SDCARD
+
 	SPI.begin(_pinSCK, _pinMISO, _pinMOSI, _pinCS);
 	pinMode(SS, OUTPUT);
 
@@ -22,6 +24,9 @@ ERROR_CODE SDcard_init(uint8_t _pinSCK,
 		log_e("SD init false.");
 		return ERROR_SD_CARD_INIT_FAILED;		
 	}
+#elif
+	return ERROR_NONE;
+#endif
 }
 
 

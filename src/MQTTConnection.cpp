@@ -16,6 +16,7 @@ ERROR_CODE MQTT_initClient( char*			 		_topic,
 	sprintf(_espID, "%x%x%x%x", espMacAddress[0],  espMacAddress[1],  espMacAddress[2],  espMacAddress[3]);
 	
 	log_e("%s",_espID);
+
 	_mqttClient.setKeepAlive(KEEP_ALIVE_PERIOD);
 	_mqttClient.setServer(MQTT_SERVER_IP_ADDRESS, MQTT_SERVER_PORT);		// cai dat server voi dia chi ip va port
 
@@ -26,6 +27,7 @@ ERROR_CODE MQTT_initClient( char*			 		_topic,
 
     
 
+#ifdef USING_MQTT
 	if(_mqttClient.connect(_espID,MQTT_USER,MQTT_PASSWORD))
 	{
 		log_e("Topic: %s.", _topic);
@@ -39,6 +41,9 @@ ERROR_CODE MQTT_initClient( char*			 		_topic,
 		_connectionStatus->mqttConnection = status_et::DISCONNECTED;
 		return ERROR_MQTT_INIT_FAILED;
 	}
+#elif
+	return ERROR_NONE;
+#endif
 }
 
 
