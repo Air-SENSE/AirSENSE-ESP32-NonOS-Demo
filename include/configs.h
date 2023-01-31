@@ -16,7 +16,7 @@
 
 #define SERIAL_DEBUG_BAUDRATE           (9600)
 #define DEVICE_DATA_SAVE_INTERVAL_TIME  (10000UL)
-#define DEVICE_PRE_GET_DATE_TIME        (5000UL)
+#define DEVICE_PRE_GET_DATE_TIME        (10000UL)
 #define ERROR_CODE                      int
 #define ERROR_NONE                      (0x00)
 

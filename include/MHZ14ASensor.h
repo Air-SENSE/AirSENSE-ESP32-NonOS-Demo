@@ -72,7 +72,7 @@ ERROR_CODE mhz_init()
                   buttonPinInterrupt,
                   CHANGE);
     long t0 = millis();
-    while (millis() - t0 < 5 * 1000) 
+    while (millis() - t0 < 60 * 1000) 
     {
         log_i("Warming up...");
         delay(1000);

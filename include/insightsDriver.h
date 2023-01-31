@@ -30,7 +30,8 @@
 #define METRICS_DUMP_INTERVAL_TICKS     (METRICS_DUMP_INTERVAL / portTICK_RATE_MS)
 static const char *TAG_INSIGHTS = "INSIGHTS";
 
-unsigned long lastPublishedMetrics = millis();
+unsigned long lastPublishedHeadMetrics = millis();
+unsigned long lastPublishedWifiMetrics = millis();
 bool insightsEnabled = true;
 bool insightsLoop = true;
 
@@ -130,14 +131,14 @@ ERROR_CODE insights_post_data()
 
     currentLoopMillis = millis();
 
-    if(insightsEnabled && insightsLoop && (currentLoopMillis-lastPublishedMetrics > METRICS_DUMP_INTERVAL)){
-        lastPublishedMetrics = currentLoopMillis;
+    if(insightsEnabled && insightsLoop && (currentLoopMillis-lastPublishedHeadMetrics > METRICS_DUMP_INTERVAL)){
+        lastPublishedHeadMetrics = currentLoopMillis;
         esp_diag_heap_metrics_dump();
         log_d("ESP-Insights heap metrics updated from loop");
         return ERROR_NONE;
     }
-    if(insightsEnabled && insightsLoop && (currentLoopMillis-lastPublishedMetrics > METRICS_DUMP_INTERVAL + METRICS_DUMP_INTERVAL / 2)){
-        lastPublishedMetrics = currentLoopMillis;
+    if(insightsEnabled && insightsLoop && (currentLoopMillis-lastPublishedWifiMetrics > METRICS_DUMP_INTERVAL + METRICS_DUMP_INTERVAL / 2)){
+        lastPublishedWifiMetrics = currentLoopMillis;
         esp_diag_wifi_metrics_dump();
         log_d("ESP-Insights  wifi metrics updated from loop");
         return ERROR_NONE;
